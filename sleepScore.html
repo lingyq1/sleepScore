@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/sleepScore.css" rel="stylesheet">
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/vant.css" rel="stylesheet">
+    <link href="css/baseNew.css" rel="stylesheet">
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/sleepScore.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <div class="chart-card" id="list1">
+            <div class="title">
+                <span>分段睡眠数据</span>
+                <img src="pic/learn-more.png">
+            </div>
+            <img src="pic/color-symbol.png">
+            <span style="color:#3171f6;font-size:32px;margin-top:20px;">&nbsp;{{sleepDescription}}&nbsp;</span>
+            <div :key="index" class="sleep-data" v-for="(item,index) in sleep_data_list">
+                <div class="cell">
+                    <div :class="'cell-' + parseSleepType(element)" :key="index"
+                         :style="{width: parseSleepPercent(element.length,item.total) }"
+                         @click="handleClick(element,item.list[index+1],item.list)"
+                         v-for="(element, index) in item.list"></div>
+                </div>
+                <div class="time">
+                    <div>{{item.startTime}}</div>
+                    <div>{{item.endTime}}</div>
+                </div>
+            </div>
+            <button @click="handleClick2()" class="button1">反馈数据异常</button>
+            <div class="giveback-time">
+                <div>【10:49浅睡20分】分段睡眠已反馈异常</div>
+                <div>已学习并更新算法</div>
+            </div>
+            <div class="giveback-time">
+                <div>【10:49浅睡20分】分段睡眠已反馈异常</div>
+                <div>已学习并更新算法</div>
+            </div>
+            <div class="giveback-time">
+                <div>【10:49浅睡20分】分段睡眠已反馈异常</div>
+                <div>已学习并更新算法</div>
+            </div>
+            <div class="giveback-time mag-bot">
+                <div>【10:49浅睡20分】分段睡眠已反馈异常</div>
+                <div>已学习并更新算法</div>
+            </div>
+        </div>
+        <div class="chart-card" id="list2" style="display: none">
+            <div class="title">
+                <span>分段睡眠数据</span>
+                <img src="pic/learn-more.png">
+            </div>
+            <img src="pic/color-symbol.png">
+            <div :key="index" class="sleep-data" v-for="(item, index) in sleep_data_list">
+                <div class="cell">
+                    <div :class="'cell-' + parseSleepType(element)" :key="index"
+                         :style="{width: parseSleepPercent(element.length,item.total) }"
+                         v-for="(element, index) in item.list"
+                         @click="handleClick1(element,item.list[index+1],item.list),handleClick5(arr,index)">
+                    </div>
+                </div>
+                <div class="time">
+                    <div>{{item.startTime}}</div>
+                    <div>{{item.endTime}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="chart-card" id="list3" style="background-color: #f8fbff; visibility: hidden">
+            <div style="color:#3171f6;font-size:32px;margin-top:20px; width: 90%">{{sleepDescription1}}
+            </div>
+            <div class="giveback-title" style="width:90%">该段时间实际情况是：</div>
+        </div>
+        <div class="chart-card1" id="list4" style="display: none;">
+            <div class="giveback-list"
+                 v-for="(element, index) in arr" @click="handleClick3(arr, index)">
+                <label v-bind:for="'leaveBed-'+index" style="width: 80%">{{element.optionDesc}}</label>
+                <input v-bind:id="'leaveBed-'+index" type="radio" class="radio">
+            </div>
+        </div>
+        <button class="button2" id="list5" style="display: none" @click="handleClick4()">提交反馈</button>
+    </div>
+</div>
+</body>
+</html>
